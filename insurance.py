@@ -11,10 +11,13 @@ from nltk.stem import WordNetLemmatizer
 # ----------------------------
 # NLTK setup
 # ----------------------------
+# Download necessary NLTK data (first time only)
 nltk.download('stopwords')
 nltk.download('punkt')
+nltk.download('punkt_tab')
 nltk.download('wordnet')
 nltk.download('omw-1.4')
+
 
 lemmatizer = WordNetLemmatizer()
 stop_words = set(stopwords.words('english'))
