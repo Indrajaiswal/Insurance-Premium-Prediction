@@ -95,8 +95,8 @@ Streamlit app built for real-time prediction
 Automatically preprocesses both structured and textual inputs
 
 ## 🧪 Run Locally
-git clone https://github.com/Indrajaiswal/Insurance_Premium_Prediction.git
-cd Insurance_Premium_Prediction
-pip install -r requirements.txt
-streamlit run insurance.py
+git clone https://github.com/Indrajaiswal/Insurance-Premium-Prediction.git
+
+
+
 
