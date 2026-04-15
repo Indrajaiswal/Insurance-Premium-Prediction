@@ -199,6 +199,24 @@ if st.button("Predict Insurance Expense", use_container_width=True):
         """, unsafe_allow_html=True
     )
 
+    st.markdown("### 🧠 Prediction Explanation")
+
+if smoker == "Yes":
+    st.write("🚨 Smoker: High impact on premium (major increase)")
+else:
+    st.write("✅ Non-smoker: Low risk factor")
+
+if bmi > 30:
+    st.write("⚠️ High BMI: Increased health risk")
+elif bmi > 25:
+    st.write("⚠️ Slightly overweight: Moderate impact")
+else:
+    st.write("✅ Healthy BMI: Low impact")
+
+st.write(f"📊 Age: {age} → contributes to risk scoring")
+st.write(f"👶 Children: {children} → increases medical dependency")
+st.write(f"📍 Region: {region} → minor impact based on dataset")
+
 # ----------------------------
 # Footer
 # ----------------------------
