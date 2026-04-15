@@ -233,7 +233,7 @@ if "pred_expense" in st.session_state:
         claim = st.session_state["inputs"]["claim"]
 
         # ---------------- AGE ----------------
-        st.markdown("### 📌 Age (Full form: Age of Policy Holder)")
+        st.markdown("### 📌  (Age of Policy Holder)")
         if age < 25:
             st.write("🟢 Low risk group (18–25 years)")
         elif age < 45:
@@ -243,49 +243,110 @@ if "pred_expense" in st.session_state:
         st.write(f"👉 Your age: {age}")
 
         # ---------------- BMI ----------------
+        # ---------------- BMI ----------------
         st.markdown("### 📌 BMI (Body Mass Index)")
         st.write("Formula: weight / height² (health risk indicator)")
 
-        if bmi < 18.5:
-            st.write("⚠️ Underweight → Moderate risk")
-        elif 18.5 <= bmi < 25:
-            st.write("✅ Normal range → Low risk")
-        elif 25 <= bmi < 30:
-            st.write("⚠️ Overweight → Increased risk")
-        else:
-            st.write("🚨 Obese → High risk (major premium increase)")
 
-        st.write(f"👉 Your BMI: {bmi}")
+def explain_bmi(bmi):
+    explanation = f"""
+### 📌 BMI (Body Mass Index)
+Value: **{bmi:.2f}**
+
+---
+
+### 📊 Range Interpretation:
+- **18.5 – 24.9** → Normal (Low risk)
+- **25.0 – 29.9** → Overweight (Moderate risk)
+- **30.0 – 34.9** → Obesity Class I (High risk)
+- **35.0 – 39.9** → Obesity Class II (Very high risk)
+- **≥ 40** → Obesity Class III (Extreme risk)
+
+---
+"""
+
+    # ---------------- LOGIC ----------------
+    if bmi < 18.5:
+        explanation += """
+👉 **Category:** Underweight  
+⚠️ Health Risk: Possible nutritional deficiency  
+💡 Insurance Impact: Slight increase due to low health resilience
+"""
+
+    elif bmi < 25:
+        explanation += """
+👉 **Category:** Normal Weight  
+✅ Health Risk: Low  
+💡 Insurance Impact: Minimal premium impact
+"""
+
+    elif bmi < 30:
+        explanation += f"""
+👉 **Category:** Overweight  
+⚠️ Health Risk: Moderate  
+📈 Your BMI ({bmi:.2f}) is just above normal range  
+💡 Insurance Impact: Slight increase in premium
+"""
+
+    elif bmi < 35:
+        explanation += f"""
+👉 **Category:** Obesity Class I  
+🚨 Health Risk: High  
+📈 Risk of diabetes & heart disease increases  
+💡 Insurance Impact: Noticeable premium increase
+"""
+
+    elif bmi < 40:
+        explanation += f"""
+👉 **Category:** Obesity Class II  
+🚨 Health Risk: Very High  
+📈 Significant health complications risk  
+💡 Insurance Impact: High premium increase
+"""
+
+    else:
+        explanation += f"""
+👉 **Category:** Obesity Class III  
+🚨 Health Risk: Extreme  
+📈 Critical health condition risk  
+💡 Insurance Impact: Very high premium increase
+"""
+
+    return explanation
+
+        
+
+        
 
         # ---------------- SMOKER ----------------
-        st.markdown("### 📌 Smoking Status")
-        if smoker == "Yes":
+st.markdown("### 📌 Smoking Status")
+if smoker == "Yes":
             st.write("🚨 Smoking increases premium by high margin (+ significant risk)")
-        else:
+else:
             st.write("✅ Non-smoker → lower risk profile")
 
         # ---------------- CHILDREN ----------------
-        st.markdown("### 📌 Number of Dependents (Children)")
-        if children == 0:
+st.markdown("### 📌 Number of Dependents (Children)")
+if children == 0:
             st.write("Low dependency → lower cost impact")
-        elif children <= 2:
+elif children <= 2:
             st.write("Moderate dependency → slight increase")
-        else:
+else:
             st.write("High dependency → higher insurance cost")
 
         # ---------------- CLAIM ----------------
-        st.markdown("### 📌 Claim Description Impact")
+st.markdown("### 📌 Claim Description Impact")
 
-        if "accident" in claim.lower() or "fracture" in claim.lower():
+if "accident" in claim.lower() or "fracture" in claim.lower():
             st.write("🚨 Accident-related claim → HIGH cost impact")
             st.write("👉 This increases predicted expense significantly")
-        elif "surgery" in claim.lower():
+elif "surgery" in claim.lower():
             st.write("⚠️ Surgery claim → Moderate to high cost impact")
-        else:
+else:
             st.write("🟢 Minor claim → low cost impact")
 
-        st.markdown("---")
-        st.success("This explanation is generated using rule-based AI logic (feature interpretation layer).")
+st.markdown("---")
+st.success("This explanation is generated using rule-based AI logic (feature interpretation layer).")
 # ----------------------------
 # Footer
 # ----------------------------
