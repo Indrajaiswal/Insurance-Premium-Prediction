@@ -189,9 +189,9 @@ if st.button("Predict Insurance Expense", use_container_width=True):
     # Predict and reverse log transform
 
     pred_log = model.predict(X_input)
-    pred_expense = np.expm1(pred_log)
+    pred_expense = np.expm1(pred_log)[0]
 
-    st.session_state["pred_expense"] = pred_expense
+    st.session_state["pred_expense"] = float(pred_expense)
     st.session_state["inputs"] = {
         "age": age,
         "bmi": bmi,
@@ -205,6 +205,7 @@ if st.button("Predict Insurance Expense", use_container_width=True):
 # Show Result AFTER prediction
 # ----------------------------
 if "pred_expense" in st.session_state:
+    pred_value = float(st.session_state["pred_expense"])
 
     st.markdown(
         f"""
@@ -212,7 +213,7 @@ if "pred_expense" in st.session_state:
         padding:25px;border-radius:15px;margin-top:20px'>
         <h2 style='color:white;text-align:center;'>💰 Predicted Insurance Expense</h2>
         <h1 style='color:white;text-align:center;font-size:50px'>
-        ${st.session_state["pred_expense"]:,.2f}</h1>
+        ${pred_value:,.2f}</h1></h1>
         </div>
         """,
         unsafe_allow_html=True
