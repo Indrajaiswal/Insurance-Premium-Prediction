@@ -43,8 +43,6 @@ tfidf_feedback = pipeline['tfidf_feedback']
 
 def explain_bmi(bmi):
     explanation = f"""
-📌 BMI (Body Mass Index)  
-Value: **{bmi:.1f}**
 
 📊 Range Interpretation:
 - 18.5–24.9 → Normal (low risk)
@@ -53,23 +51,20 @@ Value: **{bmi:.1f}**
 - 35.0–39.9 → Obesity Class II (very high risk)
 - ≥ 40 → Obesity Class III (extreme risk)
 
----
-
-👉 **Your BMI:** {bmi:.1f}
 """
 
     if bmi < 18.5:
         explanation += "\n⚠️ Underweight → Possible health risk"
     elif bmi < 25:
-        explanation += "\n✅ Normal weight → Low insurance risk"
+        explanation += "\n✅ Normal weight (low risk) → Low insurance risk"
     elif bmi < 30:
-        explanation += "\n⚠️ Overweight → Slight premium increase"
+        explanation += "\n⚠️ Overweight(moderate risk) → Slight premium increase"
     elif bmi < 35:
-        explanation += "\n🚨 Obesity Class I → Moderate risk increase"
+        explanation += "\n🚨 Obesity Class I (high risk) → Moderate risk increase"
     elif bmi < 40:
-        explanation += "\n🚨 Obesity Class II → High risk increase"
+        explanation += "\n🚨 Obesity Class II (very high risk) → High risk increase"
     else:
-        explanation += "\n🚨 Obesity Class III → Very high risk increase"
+        explanation += "\n🚨 Obesity Class III (extreme risk) → Very high risk increase"
 
     return explanation
 
