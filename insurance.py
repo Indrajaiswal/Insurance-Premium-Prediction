@@ -191,36 +191,100 @@ if st.button("Predict Insurance Expense", use_container_width=True):
     pred_log = model.predict(X_input)
     pred_expense = np.expm1(pred_log)
 
+    st.session_state["pred_expense"] = pred_expense
+    st.session_state["inputs"] = {
+        "age": age,
+        "bmi": bmi,
+        "children": children,
+        "smoker": smoker,
+        "region": region,
+        "claim": claim_description
+    }
+
+    # ----------------------------
+# Show Result AFTER prediction
+# ----------------------------
+if "pred_expense" in st.session_state:
+
     st.markdown(
         f"""
         <div style='background:linear-gradient(90deg,#00CC96,#009F6B);
         padding:25px;border-radius:15px;margin-top:20px'>
         <h2 style='color:white;text-align:center;'>💰 Predicted Insurance Expense</h2>
         <h1 style='color:white;text-align:center;font-size:50px'>
-        ${pred_expense[0]:,.2f}</h1>
+        ${st.session_state["pred_expense"]:,.2f}</h1>
         </div>
         """,
         unsafe_allow_html=True
     )
 
-    # ✅ NOW explanation is inside button
-    st.markdown("### 🧠 Prediction Explanation")
+        # ----------------------------
+    # EXPANDABLE EXPLANATION (2nd CLICK)
+    # ----------------------------
+    with st.expander("🧠 Click to understand WHY this prediction"):
+        
+        st.markdown("## 📊 Feature-wise Explanation")
 
-    if smoker == "Yes":
-        st.write("🚨 Smoker: High impact on premium (major increase)")
-    else:
-        st.write("✅ Non-smoker: Low risk factor")
+        age = st.session_state["inputs"]["age"]
+        bmi = st.session_state["inputs"]["bmi"]
+        children = st.session_state["inputs"]["children"]
+        smoker = st.session_state["inputs"]["smoker"]
+        claim = st.session_state["inputs"]["claim"]
 
-    if bmi > 30:
-        st.write("⚠️ High BMI: Increased health risk")
-    elif bmi > 25:
-        st.write("⚠️ Slightly overweight: Moderate impact")
-    else:
-        st.write("✅ Healthy BMI: Low impact")
+        # ---------------- AGE ----------------
+        st.markdown("### 📌 Age (Full form: Age of Policy Holder)")
+        if age < 25:
+            st.write("🟢 Low risk group (18–25 years)")
+        elif age < 45:
+            st.write("🟡 Medium risk group (26–45 years)")
+        else:
+            st.write("🔴 High risk group (46+ years)")
+        st.write(f"👉 Your age: {age}")
 
-    st.write(f"📊 Age: {age} → contributes to risk scoring")
-    st.write(f"👶 Children: {children} → increases medical dependency")
-    st.write(f"📍 Region: {region} → minor impact based on dataset")
+        # ---------------- BMI ----------------
+        st.markdown("### 📌 BMI (Body Mass Index)")
+        st.write("Formula: weight / height² (health risk indicator)")
+
+        if bmi < 18.5:
+            st.write("⚠️ Underweight → Moderate risk")
+        elif 18.5 <= bmi < 25:
+            st.write("✅ Normal range → Low risk")
+        elif 25 <= bmi < 30:
+            st.write("⚠️ Overweight → Increased risk")
+        else:
+            st.write("🚨 Obese → High risk (major premium increase)")
+
+        st.write(f"👉 Your BMI: {bmi}")
+
+        # ---------------- SMOKER ----------------
+        st.markdown("### 📌 Smoking Status")
+        if smoker == "Yes":
+            st.write("🚨 Smoking increases premium by high margin (+ significant risk)")
+        else:
+            st.write("✅ Non-smoker → lower risk profile")
+
+        # ---------------- CHILDREN ----------------
+        st.markdown("### 📌 Number of Dependents (Children)")
+        if children == 0:
+            st.write("Low dependency → lower cost impact")
+        elif children <= 2:
+            st.write("Moderate dependency → slight increase")
+        else:
+            st.write("High dependency → higher insurance cost")
+
+        # ---------------- CLAIM ----------------
+        st.markdown("### 📌 Claim Description Impact")
+
+        if "accident" in claim.lower() or "fracture" in claim.lower():
+            st.write("🚨 Accident-related claim → HIGH cost impact")
+            st.write("👉 This increases predicted expense significantly")
+        elif "surgery" in claim.lower():
+            st.write("⚠️ Surgery claim → Moderate to high cost impact")
+        else:
+            st.write("🟢 Minor claim → low cost impact")
+
+        st.markdown("---")
+        st.success("This explanation is generated using rule-based AI logic (feature interpretation layer).")
 # ----------------------------
 # Footer
 # ----------------------------
