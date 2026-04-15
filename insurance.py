@@ -187,7 +187,6 @@ if st.button("Predict Insurance Expense", use_container_width=True):
     X_input = hstack([structured_scaled, X_claim, X_medical, X_feedback])
     
     # Predict and reverse log transform
-if st.button("Predict Insurance Expense", use_container_width=True):
 
     pred_log = model.predict(X_input)
     pred_expense = np.expm1(pred_log)
