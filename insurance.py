@@ -258,8 +258,15 @@ if "pred_expense" in st.session_state:
             st.write("🔴 High risk group (46+ years)")
         st.write(f"👉 Your age: {age}")
 
+        
         # ---------------- BMI ----------------
-        st.markdown(explain_bmi(st.session_state["bmi"]))
+        st.markdown("### 📌 BMI (Body Mass Index)")
+        st.write("Formula: weight / height² (health risk indicator)")
+
+        st.write(f"👉 Your BMI: {bmi}")
+
+        # Show formatted explanation
+        st.markdown(explain_bmi(bmi))
 
         # ---------------- SMOKER ----------------
         st.markdown("### 📌 Smoking Status")
