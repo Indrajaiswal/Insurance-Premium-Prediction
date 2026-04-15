@@ -50,6 +50,63 @@ def preprocess_text(text):
 
 
 # ----------------------------
+# Streamlit App
+# ----------------------------
+st.set_page_config(
+    page_title="Insurance Premium Prediction",
+    page_icon="💰",
+    layout="wide"
+)
+
+# ----------------------------
+# Header
+# ----------------------------
+st.markdown(
+    """
+    <div style='background:linear-gradient(90deg, #1E90FF, #00CED1);padding:25px;border-radius:10px'>
+    <h1 style='color:white;text-align:center;'>🏥 Insurance Premium Prediction</h1>
+    <p style='color:white;text-align:center;font-size:18px;'>Predict customer insurance expense using structured & textual data</p>
+    </div>
+    """, unsafe_allow_html=True
+)
+
+# ----------------------------
+# Sidebar: Structured Inputs
+# ----------------------------
+st.sidebar.header("🧾 Customer Information")
+age = st.sidebar.number_input("Age", min_value=18, max_value=100, value=30)
+bmi = st.sidebar.number_input("BMI", min_value=10.0, max_value=50.0, value=25.0)
+children = st.sidebar.number_input("Number of Children", min_value=0, max_value=10, value=0)
+
+sex = st.sidebar.selectbox("Sex", ["Male", "Female"])
+smoker = st.sidebar.selectbox("Smoker", ["No", "Yes"])
+region = st.sidebar.selectbox("Region", ["Northwest", "Northeast", "Southeast", "Southwest"])
+
+sex_val = 0 if sex.lower() == "male" else 1
+smoker_val = 1 if smoker.lower() == "yes" else 0
+region_val = {"northwest":0, "northeast":1, "southeast":2, "southwest":3}[region.lower()]
+
+# ----------------------------
+# Info Cards Layout
+# ----------------------------
+st.markdown("### 🟢 Customer Details")
+col1, col2, col3 = st.columns(3)
+col1.markdown(f"<div style='background-color:#FFD700;padding:20px;border-radius:10px;text-align:center'>"
+              f"<h4>Age</h4><h2>{age}</h2></div>", unsafe_allow_html=True)
+col2.markdown(f"<div style='background-color:#FF7F50;padding:20px;border-radius:10px;text-align:center'>"
+              f"<h4>BMI</h4><h2>{bmi}</h2></div>", unsafe_allow_html=True)
+col3.markdown(f"<div style='background-color:#20B2AA;padding:20px;border-radius:10px;text-align:center'>"
+              f"<h4>Children</h4><h2>{children}</h2></div>", unsafe_allow_html=True)
+
+col4, col5, col6 = st.columns(3)
+col4.markdown(f"<div style='background-color:#9370DB;padding:20px;border-radius:10px;text-align:center'>"
+              f"<h4>Sex</h4><h2>{sex}</h2></div>", unsafe_allow_html=True)
+col5.markdown(f"<div style='background-color:#FF69B4;padding:20px;border-radius:10px;text-align:center'>"
+              f"<h4>Smoker</h4><h2>{smoker}</h2></div>", unsafe_allow_html=True)
+col6.markdown(f"<div style='background-color:#40E0D0;padding:20px;border-radius:10px;text-align:center'>"
+              f"<h4>Region</h4><h2>{region}</h2></div>", unsafe_allow_html=True)
+
+# ----------------------------
 # PREDEFINED OPTIONS (DROPDOWN)
 # ----------------------------
 
@@ -108,74 +165,6 @@ feedback = st.selectbox(
     "Select Feedback",
     feedback_options
 )
-
-# ----------------------------
-# Streamlit App
-# ----------------------------
-st.set_page_config(
-    page_title="Insurance Premium Prediction",
-    page_icon="💰",
-    layout="wide"
-)
-
-# ----------------------------
-# Header
-# ----------------------------
-st.markdown(
-    """
-    <div style='background:linear-gradient(90deg, #1E90FF, #00CED1);padding:25px;border-radius:10px'>
-    <h1 style='color:white;text-align:center;'>🏥 Insurance Premium Prediction</h1>
-    <p style='color:white;text-align:center;font-size:18px;'>Predict customer insurance expense using structured & textual data</p>
-    </div>
-    """, unsafe_allow_html=True
-)
-
-# ----------------------------
-# Sidebar: Structured Inputs
-# ----------------------------
-st.sidebar.header("🧾 Customer Information")
-age = st.sidebar.number_input("Age", min_value=18, max_value=100, value=30)
-bmi = st.sidebar.number_input("BMI", min_value=10.0, max_value=50.0, value=25.0)
-children = st.sidebar.number_input("Number of Children", min_value=0, max_value=10, value=0)
-
-sex = st.sidebar.selectbox("Sex", ["Male", "Female"])
-smoker = st.sidebar.selectbox("Smoker", ["No", "Yes"])
-region = st.sidebar.selectbox("Region", ["Northwest", "Northeast", "Southeast", "Southwest"])
-
-sex_val = 0 if sex.lower() == "male" else 1
-smoker_val = 1 if smoker.lower() == "yes" else 0
-region_val = {"northwest":0, "northeast":1, "southeast":2, "southwest":3}[region.lower()]
-
-# ----------------------------
-# Info Cards Layout
-# ----------------------------
-st.markdown("### 🟢 Customer Details")
-col1, col2, col3 = st.columns(3)
-col1.markdown(f"<div style='background-color:#FFD700;padding:20px;border-radius:10px;text-align:center'>"
-              f"<h4>Age</h4><h2>{age}</h2></div>", unsafe_allow_html=True)
-col2.markdown(f"<div style='background-color:#FF7F50;padding:20px;border-radius:10px;text-align:center'>"
-              f"<h4>BMI</h4><h2>{bmi}</h2></div>", unsafe_allow_html=True)
-col3.markdown(f"<div style='background-color:#20B2AA;padding:20px;border-radius:10px;text-align:center'>"
-              f"<h4>Children</h4><h2>{children}</h2></div>", unsafe_allow_html=True)
-
-col4, col5, col6 = st.columns(3)
-col4.markdown(f"<div style='background-color:#9370DB;padding:20px;border-radius:10px;text-align:center'>"
-              f"<h4>Sex</h4><h2>{sex}</h2></div>", unsafe_allow_html=True)
-col5.markdown(f"<div style='background-color:#FF69B4;padding:20px;border-radius:10px;text-align:center'>"
-              f"<h4>Smoker</h4><h2>{smoker}</h2></div>", unsafe_allow_html=True)
-col6.markdown(f"<div style='background-color:#40E0D0;padding:20px;border-radius:10px;text-align:center'>"
-              f"<h4>Region</h4><h2>{region}</h2></div>", unsafe_allow_html=True)
-
-# ----------------------------
-# Main Page: Claim Info
-# ----------------------------
-st.markdown("<hr style='border:1px solid #D3D3D3'>", unsafe_allow_html=True)
-st.markdown("<h2 style='color:#FF4500;'>📝 Claim Information</h2>", unsafe_allow_html=True)
-
-claim_description = st.text_area("Claim Description", "Minor injury claim", height=100)
-medical_notes = st.text_area("Medical Notes", "No chronic illness", height=100)
-feedback = st.text_area("Customer Feedback", "Quick claim, no issues", height=100)
-
 # ----------------------------
 # Prediction
 # ----------------------------
