@@ -187,36 +187,41 @@ if st.button("Predict Insurance Expense", use_container_width=True):
     X_input = hstack([structured_scaled, X_claim, X_medical, X_feedback])
     
     # Predict and reverse log transform
+if st.button("Predict Insurance Expense", use_container_width=True):
+
     pred_log = model.predict(X_input)
     pred_expense = np.expm1(pred_log)
-    
+
     st.markdown(
         f"""
-        <div style='background:linear-gradient(90deg,#00CC96,#009F6B);padding:25px;border-radius:15px;margin-top:20px'>
+        <div style='background:linear-gradient(90deg,#00CC96,#009F6B);
+        padding:25px;border-radius:15px;margin-top:20px'>
         <h2 style='color:white;text-align:center;'>💰 Predicted Insurance Expense</h2>
-        <h1 style='color:white;text-align:center;font-size:50px'>${pred_expense[0]:,.2f}</h1>
+        <h1 style='color:white;text-align:center;font-size:50px'>
+        ${pred_expense[0]:,.2f}</h1>
         </div>
-        """, unsafe_allow_html=True
+        """,
+        unsafe_allow_html=True
     )
 
+    # ✅ NOW explanation is inside button
     st.markdown("### 🧠 Prediction Explanation")
 
-if smoker == "Yes":
-    st.write("🚨 Smoker: High impact on premium (major increase)")
-else:
-    st.write("✅ Non-smoker: Low risk factor")
+    if smoker == "Yes":
+        st.write("🚨 Smoker: High impact on premium (major increase)")
+    else:
+        st.write("✅ Non-smoker: Low risk factor")
 
-if bmi > 30:
-    st.write("⚠️ High BMI: Increased health risk")
-elif bmi > 25:
-    st.write("⚠️ Slightly overweight: Moderate impact")
-else:
-    st.write("✅ Healthy BMI: Low impact")
+    if bmi > 30:
+        st.write("⚠️ High BMI: Increased health risk")
+    elif bmi > 25:
+        st.write("⚠️ Slightly overweight: Moderate impact")
+    else:
+        st.write("✅ Healthy BMI: Low impact")
 
-st.write(f"📊 Age: {age} → contributes to risk scoring")
-st.write(f"👶 Children: {children} → increases medical dependency")
-st.write(f"📍 Region: {region} → minor impact based on dataset")
-
+    st.write(f"📊 Age: {age} → contributes to risk scoring")
+    st.write(f"👶 Children: {children} → increases medical dependency")
+    st.write(f"📍 Region: {region} → minor impact based on dataset")
 # ----------------------------
 # Footer
 # ----------------------------
