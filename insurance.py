@@ -48,6 +48,67 @@ def preprocess_text(text):
     tokens = [lemmatizer.lemmatize(word) for word in tokens if word not in stop_words]
     return " ".join(tokens)
 
+
+# ----------------------------
+# PREDEFINED OPTIONS (DROPDOWN)
+# ----------------------------
+
+claim_options = [
+    "Severe car accident with multiple fractures",
+    "Major surgery following workplace injury",
+    "Critical illness claim - cancer treatment",
+    "Hospitalization due to severe infection",
+    "Moderate injury from car accident",
+    "Slip and fall - minor fracture",
+    "Hospital stay for routine surgery",
+    "Sports injury requiring short recovery",
+    "Minor injury claim",
+    "Doctor visit for checkup",
+    "Outpatient treatment for flu",
+    "Small medical claim for prescription"
+]
+
+medical_options = [
+    "Smoker, higher risk of lung issues. Obese, potential risk for heart disease",
+    "Overweight, moderate health risk. Diabetes under control",
+    "Healthy weight range. No chronic illness",
+    "History of hypertension. Asthma under observation",
+    "No chronic illness"
+]
+
+feedback_options = [
+    "Claim took long time but approved",
+    "Satisfied with process despite delay",
+    "Very stressful experience but finally resolved",
+    "Happy with quick approval",
+    "Process was smooth",
+    "Good communication from company",
+    "Quick claim, no issues",
+    "Simple and efficient service",
+    "Very satisfied with process"
+]
+
+# ----------------------------
+# STREAMLIT DROPDOWN UI
+# ----------------------------
+
+st.markdown("## 📝 Claim Information")
+
+claim_description = st.selectbox(
+    "Select Claim Description",
+    claim_options
+)
+
+medical_notes = st.selectbox(
+    "Select Medical Notes",
+    medical_options
+)
+
+feedback = st.selectbox(
+    "Select Feedback",
+    feedback_options
+)
+
 # ----------------------------
 # Streamlit App
 # ----------------------------
